@@ -1,1 +1,9 @@
-This folder contains the files regarding the SQLite code and the exported code for variance by month.
+This folder contains the files regarding the SQLite code and the exported results for variance by department/account category and variance by month. The queries were written against meridian_finance.db (Meridian Fixtures) and cover January–July 2026.
+
+What the SQL answers
+Actuals: Total actual spend/revenue by department and account category (Revenue, COGS, Operating Expense), Jan–Jul 2026.
+Budget: Total budgeted amount by the same grouping. Budget is stored monthly and actuals are stored at the transaction level, so actuals are aggregated by month to compare properly.
+Variance table: A budget-vs-actual variance table by department × account category, with $ and % variance.
+Monthly variance: The same variance table by month rather than the full period, so a variance can be classified as a one-time spike or a persistent trend.
+
+Items 3 and 4 were exported to CSV and are the team's shared starting point for Step 2.
