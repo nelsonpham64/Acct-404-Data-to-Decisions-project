@@ -1,0 +1,7 @@
+﻿department_name,account_category,max_month_count,trend_classification
+General & Administrative,Operating Expense,7,Persistent Trend
+Operations,COGS,5,Persistent Trend
+Operations,Operating Expense,6,Persistent Trend
+Research & Development,Operating Expense,7,Persistent Trend
+Sales & Marketing,Operating Expense,7,Persistent Trend
+Sales & Marketing,Revenue,7,Persistent Trend
