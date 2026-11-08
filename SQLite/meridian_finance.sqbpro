@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="meridian_finance1.db" readonly="0" foreign_keys="0" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="923"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="general_ledger" custom_title="0" dock_id="1" table="4,14:maingeneral_ledger"/><dock_state state="000000ff00000000fd00000001000000020000034c00000224fc0100000001fb000000160064006f0063006b00420072006f007700730065003101000000000000034c0000015c00ffffff0000034c0000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="chart_of_accounts" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="69"/><column index="2" value="195"/><column index="3" value="140"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="general_ledger" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="72"/><column index="2" value="85"/><column index="3" value="91"/><column index="4" value="69"/><column index="5" value="78"/><column index="6" value="78"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="monthly_budget" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="90"/><column index="2" value="91"/><column index="3" value="69"/><column index="4" value="97"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="Actuals by Department and Category*">SELECT d.department_name,
+       c.account_category,
+       ROUND(SUM(CASE WHEN c.account_category = 'Revenue' THEN -g.amount ELSE g.amount END), 2) AS actual_amount
+FROM general_ledger AS g
+JOIN chart_of_accounts AS c ON g.account_id = c.account_id
+JOIN department_master AS d ON g.department_id = d.department_id
+WHERE g.txn_date &gt;= '2026-01-01' AND g.txn_date &lt; '2026-08-01'
+GROUP BY d.department_name, c.account_category
+ORDER BY d.department_name, c.account_category;</sql><sql name="Budget by Department and Category">SELECT d.department_name,
+       c.account_category,
+       ROUND(SUM(b.budget_amount), 2) AS budget_amount
+FROM monthly_budget AS b
+JOIN chart_of_accounts AS c ON b.account_id = c.account_id
+JOIN department_master AS d ON b.department_id = d.department_id
+WHERE b.budget_month BETWEEN '2026-01' AND '2026-07'
+GROUP BY d.department_name, c.account_category
+ORDER BY d.department_name, c.account_category;</sql><sql name="Variance Table*">SELECT d.department_name,
+       b.account_category,
+       ROUND(b.budget_amount, 2)                         AS budget_amount,
+       ROUND(a.actual_amount, 2)                         AS actual_amount,
+       ROUND(a.actual_amount - b.budget_amount, 2)       AS variance_dollar,
+       ROUND(100.0 * (a.actual_amount - b.budget_amount)
+             / b.budget_amount, 1)                       AS variance_pct
+FROM (
+    SELECT bu.department_id,
+           c.account_category,
+           SUM(bu.budget_amount) AS budget_amount
+    FROM monthly_budget AS bu
+    JOIN chart_of_accounts AS c ON bu.account_id = c.account_id
+    WHERE bu.budget_month BETWEEN '2026-01' AND '2026-07'
+    GROUP BY bu.department_id, c.account_category
+) b
+JOIN (
+    SELECT g.department_id,
+           c.account_category,
+           SUM(CASE WHEN c.account_category = 'Revenue' THEN -g.amount ELSE g.amount END) AS actual_amount
+    FROM general_ledger AS g
+    JOIN chart_of_accounts AS c ON g.account_id = c.account_id
+    WHERE g.txn_date &gt;= '2026-01-01' AND g.txn_date &lt; '2026-08-01'
+    GROUP BY g.department_id, c.account_category
+) a
+       ON a.department_id = b.department_id
+      AND a.account_category = b.account_category
+JOIN department_master AS d ON d.department_id = b.department_id
+ORDER BY d.department_name, b.account_category;</sql><sql name="Variance by Month*">SELECT b.month,
+       d.department_name,
+       b.account_category,
+       ROUND(b.budget_amount, 2)                         AS budget_amount,
+       ROUND(a.actual_amount, 2)                         AS actual_amount,
+       ROUND(a.actual_amount - b.budget_amount, 2)       AS variance_dollar,
+       ROUND(100.0 * (a.actual_amount - b.budget_amount)
+             / b.budget_amount, 1)                       AS variance_pct
+FROM (
+    SELECT bu.budget_month AS month,
+           bu.department_id,
+           c.account_category,
+           SUM(bu.budget_amount) AS budget_amount
+    FROM monthly_budget AS bu
+    JOIN chart_of_accounts AS c ON bu.account_id = c.account_id
+    WHERE bu.budget_month BETWEEN '2026-01' AND '2026-07'
+    GROUP BY bu.budget_month, bu.department_id, c.account_category
+)b 
+JOIN (
+    SELECT substr(g.txn_date, 1, 7) AS month,
+           g.department_id,
+           c.account_category,
+           SUM(CASE WHEN c.account_category = 'Revenue' THEN -g.amount ELSE g.amount END) AS actual_amount
+    FROM general_ledger AS g
+    JOIN chart_of_accounts AS c ON g.account_id = c.account_id
+    WHERE g.txn_date &gt;= '2026-01-01' AND g.txn_date &lt; '2026-08-01'
+    GROUP BY substr(g.txn_date, 1, 7), g.department_id, c.account_category
+) a
+       ON a.month = b.month
+      AND a.department_id = b.department_id
+      AND a.account_category = b.account_category
+JOIN department_master AS d ON d.department_id = b.department_id
+ORDER BY d.department_name, b.account_category, b.month;</sql><current_tab id="3"/></tab_sql></sqlb_project>
