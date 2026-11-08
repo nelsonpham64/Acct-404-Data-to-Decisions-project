@@ -1,7 +1,0 @@
-department_name,account_category,budget_amount,actual_amount,variance_dollar,variance_pct
-General & Administrative,Operating Expense,692526.69,2596662.17,1904135.48,275.0
-Operations,COGS,1321299.49,1061044.78,-260254.71,-19.7
-Operations,Operating Expense,1031280.94,1538336.34,507055.4,49.2
-Research & Development,Operating Expense,547117.49,3034974.13,2487856.64,454.7
-Sales & Marketing,Operating Expense,281127.73,1160589.04,879461.31,312.8
-Sales & Marketing,Revenue,554695.32,-2711681.79,-3266377.11,-588.9
