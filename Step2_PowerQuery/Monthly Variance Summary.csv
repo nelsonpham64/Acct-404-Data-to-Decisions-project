@@ -1,9 +1,0 @@
-﻿department_name,account_category,variance_direction,month_count
-General & Administrative,Operating Expense,Positive,7
-Operations,COGS,Positive,2
-Operations,COGS,Negative,5
-Operations,Operating Expense,Positive,6
-Operations,Operating Expense,Negative,1
-Research & Development,Operating Expense,Positive,7
-Sales & Marketing,Operating Expense,Positive,7
-Sales & Marketing,Revenue,Positive,7
