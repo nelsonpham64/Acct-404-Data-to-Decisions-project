@@ -1,7 +1,7 @@
 ﻿department_name,account_category,budget_amount,actual_amount,variance_dollar,variance_pct,materiality_flag
-General & Administrative,Operating Expense,"$692,526.69 ","$2,596,662.17 ","$1,904,135.48 ",275,Flagged
-Operations,COGS,"$1,321,299.49 ","$1,061,044.78 ","($260,254.71)",-19.7,Flagged
-Operations,Operating Expense,"$1,031,280.94 ","$1,538,336.34 ","$507,055.40 ",49.2,Flagged
-Research & Development,Operating Expense,"$547,117.49 ","$3,034,974.13 ","$2,487,856.64 ",454.7,Flagged
-Sales & Marketing,Operating Expense,"$281,127.73 ","$1,160,589.04 ","$879,461.31 ",312.8,Flagged
-Sales & Marketing,Revenue,"$554,695.32 ","($2,711,681.79)","($3,266,377.11)",-588.9,Flagged
+General & Administrative,Operating Expense," $692,526.69 "," $2,596,662.17 "," $1,904,135.48 ",275,Flagged
+Operations,COGS," $1,321,299.49 "," $1,061,044.78 "," $(260,254.71)",-19.7,Flagged
+Operations,Operating Expense," $1,031,280.94 "," $1,538,336.34 "," $507,055.40 ",49.2,Flagged
+Research & Development,Operating Expense," $547,117.49 "," $3,034,974.13 "," $2,487,856.64 ",454.7,Flagged
+Sales & Marketing,Operating Expense," $281,127.73 "," $1,160,589.04 "," $879,461.31 ",312.8,Flagged
+Sales & Marketing,Revenue," $554,695.32 "," $2,711,681.79 "," $2,156,986.47 ",388.9,Flagged

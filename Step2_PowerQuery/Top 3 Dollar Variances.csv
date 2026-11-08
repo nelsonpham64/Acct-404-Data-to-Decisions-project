@@ -1,4 +1,4 @@
 ﻿department_name,account_category,budget_amount,actual_amount,variance_dollar,variance_pct,materiality_flag,absolute_variance_dollar
-Sales & Marketing,Revenue," $554,695.32 "," $(2,711,681.79)"," $(3,266,377.11)",-588.9,Flagged," $3,266,377.11 "
 Research & Development,Operating Expense," $547,117.49 "," $3,034,974.13 "," $2,487,856.64 ",454.7,Flagged," $2,487,856.64 "
+Sales & Marketing,Revenue," $554,695.32 "," $2,711,681.79 "," $2,156,986.47 ",388.9,Flagged," $2,156,986.47 "
 General & Administrative,Operating Expense," $692,526.69 "," $2,596,662.17 "," $1,904,135.48 ",275,Flagged," $1,904,135.48 "
